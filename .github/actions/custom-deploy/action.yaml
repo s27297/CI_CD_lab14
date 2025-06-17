@@ -25,6 +25,7 @@ runs:
       run: |
         Write-Host "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
         $start = Get-Date
+        echo '$env:GITHUB_OUTPUT'
         Start-Sleep -Seconds 3
         $end = Get-Date
         $duration = [math]::Round(($end - $start).TotalSeconds)
