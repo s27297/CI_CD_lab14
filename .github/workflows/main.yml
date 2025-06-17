@@ -102,7 +102,7 @@ jobs:
 
   notify:
     if: failure()
-    needs: [lint, audit, format, test, integration, build, deploy]
+    needs: [lint, audit, format, test, integration, build]
     runs-on: ubuntu-latest
     steps:
       - run: echo "Notify dev team of failure via Slack/Teams/etc."
