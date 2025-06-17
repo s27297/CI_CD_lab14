@@ -18,15 +18,17 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: |
+    - shell: cmd
+      run: |
         echo Deploying version ${{ inputs.version }} to ${{ inputs.environment }}
-        for /f %%i in ('powershell -Command "Get-Date -UFormat %%s"') do set START=%%i
+        for /f %%i in ('powershell -Command "[int](Get-Date -UFormat %%s)"') do set START=%%i
         timeout /t 3 /nobreak > nul
-        for /f %%i in ('powershell -Command "Get-Date -UFormat %%s"') do set END=%%i
-        set /a DURATION=%END% - %START%
-        echo deployment-url=https://app.${{ inputs.environment }}.example.com>> %GITHUB_OUTPUT%
-        echo deployment-time=%DURATION%>> %GITHUB_OUTPUT%
+        for /f %%i in ('powershell -Command "[int](Get-Date -UFormat %%s)"') do set END=%%i
+        set /a DURATION=END - START
+        setlocal enabledelayedexpansion
+        echo deployment-url=https://app.${{ inputs.environment }}.example.com>> !GITHUB_OUTPUT!
+        echo deployment-time=!DURATION!>> !GITHUB_OUTPUT!
+        endlocal
         if "${{ inputs.notify-team }}"=="true" (
           echo Team has been notified.
         )
-      shell: cmd
