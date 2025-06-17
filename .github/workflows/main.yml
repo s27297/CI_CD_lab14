@@ -109,9 +109,6 @@ jobs:
           environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
           version: ${{ github.sha }}
           notify-team: true
-      - run: echo "mejsce outputa   $env:GITHUB_OUTPUT"
-      - run: echo "Deployment took $steps.deploy.outputs.deployment-time seconds"
-      - run: echo "Deployment took $steps.deploy_step.outputs.deployment-time seconds"
 
   notify_fail:
     if: failure()
@@ -119,9 +116,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Notify dev team of failure via Slack/Teams/etc."
+      - run: echo "Deployment took ${{steps.deploy.outputs.deployment-time}} seconds"
+      - run: echo "Deployment took $steps.deploy_step.outputs.deployment-time seconds"
   notify_succes:
     if: success()
     needs: [lint, audit, format, test, integration, build, deploy]
     runs-on: ubuntu-latest
     steps:
       - run: echo "Notify dev team of success via Slack/Teams/etc."
+      - run: echo "Deployment took $steps.deploy.outputs.deployment-time seconds"
+      - run: echo "Deployment took ${{steps.deploy_step.outputs.deployment-time}} seconds"
