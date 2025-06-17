@@ -109,6 +109,7 @@ jobs:
           environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
           version: ${{ github.sha }}
           notify-team: true
+      - run: echo "mejsce outputa   $env:GITHUB_OUTPUT"
 
       - run: echo "Deployment took ${{ steps.deploy_step.outputs.deployment-time }} seconds"
 
