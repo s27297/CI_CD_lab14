@@ -96,29 +96,22 @@ jobs:
 
   deploy:
     needs: build
-    if: always()
-
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy to staging
+      - name: Deploy based on branch
+        id: deploy_step
         uses: ./.github/actions/custom-deploy
         with:
-          environment: staging
+          environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
           version: ${{ github.sha }}
           notify-team: true
-        if: github.ref == 'refs/heads/develop'
-      - name: Deploy to producttion
-        uses: ./.github/actions/custom-deploy
-        with:
-          environment: staging
-          version: ${{ github.sha }}
-          notify-team: true
-        if: github.ref == 'refs/heads/main'
 
-      - run: echo "Deployment took ${{ steps.deploy.outputs.deployment-time }} seconds"
-
+      - run: echo "Deployment took ${{ steps.deploy_step.outputs.deployment-time }} seconds"
+        
   notify_fail:
     if: failure()
     needs: [lint, audit, format, test, integration, build, deploy]
