@@ -26,7 +26,8 @@ runs:
         $start = Get-Date
         Start-Sleep -Seconds 3
         $end = Get-Date
-        echo '${{ github.output }} '
+        echo '${{GITHUB_OUTPUT}}'
+        echo '$env:GITHUB_OUTPUT'
         $duration = [math]::Round(($end - $start).TotalSeconds)
         "deployment-url=https://app.${{ inputs.environment }}.example.com" >> ${{ github.output }}
         "deployment-time=$duration" >> ${{ github.output }}
