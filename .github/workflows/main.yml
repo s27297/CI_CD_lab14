@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16, 18, 20]
+        node-version: [18, 20]
     container:
       image: node:${{ matrix.node-version }}
       options: --cpus 2 --memory 4g
