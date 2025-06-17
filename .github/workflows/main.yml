@@ -109,8 +109,6 @@ jobs:
           environment: ${{ github.event.inputs.environment || 'staging' }}
           version: ${{ github.sha }}
           notify-team: true
-      - run: echo "Deployment took ${{ steps.deploy.outputs.deployment-time }} seconds"
-      - run: echo "deployment-url  ${{ steps.deploy.outputs.deployment-url }} seconds"
 
   notify_fail:
     if: failure()
