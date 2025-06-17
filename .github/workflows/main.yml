@@ -124,3 +124,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Notify dev team of success via Slack/Teams/etc."
+      - run: echo "Deployment took ${{ steps.deploy.outputs.deployment-time }} seconds"
