@@ -29,7 +29,7 @@ runs:
         echo '${{ github.output }} '
         $duration = [math]::Round(($end - $start).TotalSeconds)
         "deployment-url=https://app.${{ inputs.environment }}.example.com" >> ${{ github.output }}
-        "deployment-time=$duration" >> ${{ github.output }}
+        "deployment-time=$duration" >> $env:GITHUB_OUTPUT
         if ("${{ inputs.notify-team }}" -eq "true") {
           Write-Host "Team has been notified."
         }

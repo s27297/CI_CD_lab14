@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f594f5d5-2bf1-40d3-a4e6-4aea39cee8f2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/actions/custom-deploy/action.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/actions/custom-deploy/action.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +72,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1750144572331</updated>
-      <workItem from="1750144573358" duration="12221000" />
+      <workItem from="1750144573358" duration="12545000" />
     </task>
     <servers />
   </component>
