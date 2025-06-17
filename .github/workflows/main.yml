@@ -12,54 +12,54 @@ on:
         default: "staging"
 
 jobs:
-  #  lint:
-  #    runs-on: ubuntu-latest
-  #    steps:
-  #      - uses: actions/checkout@v4
-  #      - run: npm ci
-  #      - run: npm run lint
-  #
-  #  audit:
-  #    runs-on: ubuntu-latest
-  #    steps:
-  #      - uses: actions/checkout@v4
-  #      - run: npm ci
-  #      - run: npm audit --audit-level=moderate || true
-  #
-  #  format:
-  #    runs-on: ubuntu-latest
-  #    steps:
-  #      - uses: actions/checkout@v4
-  #      - run: npm ci
-  #      - run: npm run format:check
-  #
-  #  test:
-  #    needs: [lint, audit, format]
-  #    runs-on: ubuntu-latest
-  #    strategy:
-  #      matrix:
-  #        node-version: [20]
-  #    container:
-  #      image: node:${{ matrix.node-version }}
-  #      options: --cpus 2 --memory 4g
-  #      volumes:
-  #        - /cache/node:/app/node_modules
-  #    steps:
-  #      - uses: actions/checkout@v4
-  #      - uses: actions/cache@v4
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run lint
+
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm audit --audit-level=moderate || true
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run format:check
+
+  test:
+    needs: [lint, audit, format]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
+    container:
+      image: node:${{ matrix.node-version }}
+      options: --cpus 2 --memory 4g
+      volumes:
+        - /cache/node:/app/node_modules
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-deps-${{ hashFiles('package-lock.json') }}
+      - run: npm ci
+      - run: npm run test
+  #      - uses: codecov/codecov-action@v4
+  #      - uses: actions/upload-artifact@v4
   #        with:
-  #          path: node_modules
-  #          key: node-deps-${{ hashFiles('package-lock.json') }}
-  #      - run: npm ci
-  #      - run: npm run test
-  #  #      - uses: codecov/codecov-action@v4
-  #  #      - uses: actions/upload-artifact@v4
-  #  #        with:
-  #  #          name: test-reports
-  #  #          path: coverage/
+  #          name: test-reports
+  #          path: coverage/
 
   integration:
-#    needs: test
+    needs: test
     runs-on: ubuntu-latest
     services:
       db:
@@ -109,7 +109,7 @@ jobs:
 
   notify:
     if: failure()
-#    needs: [lint, audit, format, test, integration, build]
+    needs: [lint, audit, format, test, integration, build]
     runs-on: ubuntu-latest
     steps:
       - run: echo "Notify dev team of failure via Slack/Teams/etc."
