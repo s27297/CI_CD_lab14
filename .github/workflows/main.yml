@@ -52,6 +52,7 @@ jobs:
           key: node-deps-${{ hashFiles('package-lock.json') }}
       - run: npm ci
       - run: npm run test
+      - run: npm run coverage
       - uses: actions/upload-artifact@v4
         with:
           name: test-reports
@@ -92,19 +93,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t my-node-app .
-
-  deploy:
-    if: always()
-    needs: build
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy
-        uses: ./.github/actions/custom-deploy
-        with:
-          environment: ${{ github.event.inputs.environment || 'staging' }}
-          version: ${{ github.sha }}
-          notify-team: true
+  #
+  #  deploy:
+  #    if: always()
+  #    needs: build
+  #    runs-on: self-hosted
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #      - name: Deploy
+  #        uses: ./.github/actions/custom-deploy
+  #        with:
+  #          environment: ${{ github.event.inputs.environment || 'staging' }}
+  #          version: ${{ github.sha }}
+  #          notify-team: true
 
   notify_fail:
     if: failure()

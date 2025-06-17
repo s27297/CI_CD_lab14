@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "format:check": "prettier --check .",
     "test": "jest",
+    "coverage": "jest --coverage --coverageReporters=cobertura --coverageDirectory=coverage",
     "test:integration": "jest --config jest.integration.config.js"
   },
   "private": true,
