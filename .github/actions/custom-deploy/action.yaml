@@ -1,30 +1,32 @@
-name: Node.js CI
+name: "Custom Deploy"
+description: "Deploy Node.js app"
 
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
+inputs:
+  environment:
+    required: true
+  version:
+    required: true
+  notify-team:
+    default: "false"
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x, 20.x]
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Użyj Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    
-    - name: Zainstaluj zależności
-      run: npm ci
-    
-    - name: Uruchom testy
-      run: npm test
+outputs:
+  deployment-url:
+    description: "URL of deployment"
+  deployment-time:
+    description: "Deployment duration"
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        echo "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
+        start=$(date +%s)
+        sleep 3
+        end=$(date +%s)
+        duration=$((end - start))
+        echo "deployment-url=https://app.${{ inputs.environment }}.example.com" >> "$GITHUB_OUTPUT"
+        echo "deployment-time=$duration" >> "$GITHUB_OUTPUT"
+        if [[ "${{ inputs.notify-team }}" == "true" ]]; then
+          echo "Team has been notified."
+        fi
+      shell: bash

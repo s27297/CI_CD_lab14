@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest --ci --reporters=default --reporters=jest-junit",
-    "coverage": "jest --coverage --coverageReporters=cobertura --coverageDirectory=target/reports"
+    "start": "node src/app.js",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "test": "jest",
+    "test:integration": "jest --config jest.integration.config.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +17,8 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
     "jest": "^29.7.0",
     "jest-junit": "^16.0.0",
     "sonarqube-scanner": "^4.3.0",

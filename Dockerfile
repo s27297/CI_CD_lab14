@@ -1,20 +1,10 @@
-# Użyj odpowiedniej wersji Node.js
-FROM node:18
+FROM node:20-alpine
 
-# Katalog roboczy
 WORKDIR /app
 
-# Skopiuj zależności
 COPY package*.json ./
+RUN npm ci
 
-# Instalacja zależności produkcyjnych i deweloperskich
-RUN npm ci --omit=dev && npm cache clean --force
-
-# Skopiuj cały kod źródłowy
 COPY . .
 
-# Wystaw port aplikacji (jeśli używasz Express)
-EXPOSE 5000
-
-# Domyślne polecenie
-CMD ["node", "project.js"]
+CMD ["npm", "start"]
