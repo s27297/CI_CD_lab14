@@ -1,0 +1,32 @@
+name: "Custom Deploy"
+description: "Deploy Node.js app"
+
+inputs:
+  environment:
+    required: true
+  version:
+    required: true
+  notify-team:
+    default: "false"
+
+outputs:
+  deployment-url:
+    description: "URL of deployment"
+  deployment-time:
+    description: "Deployment duration"
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        echo "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
+        start=$(date +%s)
+        sleep 3
+        end=$(date +%s)
+        duration=$((end - start))
+        echo "deployment-url=https://app.${{ inputs.environment }}.example.com" >> "$GITHUB_OUTPUT"
+        echo "deployment-time=$duration" >> "$GITHUB_OUTPUT"
+        if [[ "${{ inputs.notify-team }}" == "true" ]]; then
+          echo "Team has been notified."
+        fi
+      shell: pwsh
