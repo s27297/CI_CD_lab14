@@ -19,22 +19,17 @@ runs:
   using: "composite"
   steps:
     - shell: powershell
+      env:
+        GITHUB_OUTPUT: ${{ env.GITHUB_OUTPUT }}
       run: |
         Write-Host "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
         $start = Get-Date
         Start-Sleep -Seconds 3
         $end = Get-Date
+        echo '${{ github.output }} '
         $duration = [math]::Round(($end - $start).TotalSeconds)
-
-        # fallback path if GITHUB_OUTPUT is not set
-        $outputFile = $env:GITHUB_OUTPUT
-        if ([string]::IsNullOrEmpty($outputFile)) {
-          $outputFile = "$env:RUNNER_TEMP\github_output.txt"
-        }
-
-        "deployment-url=https://app.${{ inputs.environment }}.example.com" >> $outputFile
-        "deployment-time=$duration" >> $outputFile
-
+        "deployment-url=https://app.${{ inputs.environment }}.example.com" >> ${{ github.output }}
+        "deployment-time=$duration" >> ${{ github.output }}
         if ("${{ inputs.notify-team }}" -eq "true") {
           Write-Host "Team has been notified."
         }
