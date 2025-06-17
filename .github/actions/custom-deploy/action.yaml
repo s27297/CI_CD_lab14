@@ -18,7 +18,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - shell: pwsh
+    - shell: powershell
       run: |
         Write-Host "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
         $start = Get-Date
