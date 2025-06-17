@@ -19,6 +19,8 @@ runs:
   using: "composite"
   steps:
     - shell: powershell
+      env:
+        GITHUB_OUTPUT: ${{ env.GITHUB_OUTPUT }}
       run: |
         Write-Host "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
         $start = Get-Date
