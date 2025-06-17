@@ -10,7 +10,7 @@ app.get('/api/status', (req, res)=> {
     console.log(version1)
     res.json({'version': version1,'status':status1})
 })
-
+//cat
 app.get('/api/data', (req, res)=> {
     let a=add(5,7)
     let b=razy(5,7)
