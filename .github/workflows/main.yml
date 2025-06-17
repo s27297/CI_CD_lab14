@@ -111,7 +111,7 @@ jobs:
           notify-team: true
 
       - run: echo "Deployment took ${{ steps.deploy_step.outputs.deployment-time }} seconds"
-        
+
   notify_fail:
     if: failure()
     needs: [lint, audit, format, test, integration, build, deploy]
