@@ -94,9 +94,10 @@ jobs:
       - uses: actions/checkout@v4
       - run: docker build -t my-node-app .
 
-  deploy-staging:
+  deploy:
     needs: build
-    if: github.ref == 'refs/heads/develop'
+    if: always()
+
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -107,55 +108,26 @@ jobs:
           environment: staging
           version: ${{ github.sha }}
           notify-team: true
-
-      - run: echo "Deployment took ${{ steps.deploy.outputs.deployment-time }} seconds"
-        if: always()
-
-  deploy-production:
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Deploy to production
+        if: github.ref == 'refs/heads/develop'
+      - name: Deploy to producttion
         uses: ./.github/actions/custom-deploy
         with:
-          environment: production
+          environment: staging
           version: ${{ github.sha }}
           notify-team: true
+        if: github.ref == 'refs/heads/main'
 
       - run: echo "Deployment took ${{ steps.deploy.outputs.deployment-time }} seconds"
-        if: always()
+
   notify_fail:
     if: failure()
-    needs:
-      [
-        lint,
-        audit,
-        format,
-        test,
-        integration,
-        build,
-        deploy-production,
-        deploy-staging,
-      ]
+    needs: [lint, audit, format, test, integration, build, deploy]
     runs-on: ubuntu-latest
     steps:
       - run: echo "Notify dev team of failure via Slack/Teams/etc."
   notify_succes:
     if: success()
-    needs:
-      [
-        lint,
-        audit,
-        format,
-        test,
-        integration,
-        build,
-        deploy-production,
-        deploy-staging,
-      ]
+    needs: [lint, audit, format, test, integration, build, deploy]
     runs-on: ubuntu-latest
     steps:
       - run: echo "Notify dev team of success via Slack/Teams/etc."
