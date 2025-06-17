@@ -18,15 +18,17 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: |
-        echo "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
-        start=$(date +%s)
-        sleep 3
-        end=$(date +%s)
-        duration=$((end - start))
-        echo "deployment-url=https://app.${{ inputs.environment }}.example.com" >> "$GITHUB_OUTPUT"
-        echo "deployment-time=$duration" >> "$GITHUB_OUTPUT"
-        if [[ "${{ inputs.notify-team }}" == "true" ]]; then
-          echo "Team has been notified."
-        fi
-      shell: pwsh
+    - shell: cmd
+      run: |
+        echo Deploying version ${{ inputs.version }} to ${{ inputs.environment }}
+        for /f %%i in ('powershell -Command "[int](Get-Date -UFormat %%s)"') do set START=%%i
+        timeout /t 3 /nobreak > nul
+        for /f %%i in ('powershell -Command "[int](Get-Date -UFormat %%s)"') do set END=%%i
+        set /a DURATION=END - START
+        setlocal enabledelayedexpansion
+        echo deployment-url=https://app.${{ inputs.environment }}.example.com>> "%GITHUB_OUTPUT%"
+        echo deployment-time=!DURATION!>> "%GITHUB_OUTPUT%"
+        endlocal
+        if "${{ inputs.notify-team }}"=="true" (
+          echo Team has been notified.
+        )
