@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f594f5d5-2bf1-40d3-a4e6-4aea39cee8f2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +42,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/anako/AppData/Roaming/JetBrains/WebStorm2024.2/node/versions/22.15.0",
+    "last_opened_file_path": "D:/studia/pipelines/lab12",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -66,7 +68,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1750144572331</updated>
-      <workItem from="1750144573358" duration="1447000" />
+      <workItem from="1750144573358" duration="1782000" />
     </task>
     <servers />
   </component>
