@@ -12,9 +12,10 @@ inputs:
 outputs:
   deployment-url:
     description: "URL of deployment"
+    value: ${{ steps.set_output.outputs.deployment-time }}
   deployment-time:
     description: "Deployment duration"
-
+    value: ${{ steps.set_output.outputs.deployment-url }}
 runs:
   using: "composite"
   steps:
