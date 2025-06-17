@@ -19,14 +19,14 @@ runs:
   using: "composite"
   steps:
     - run: |
-        Write-Host "Deploying version ${{ inputs.version }} to ${{ inputs.environment }}"
-        $start = Get-Date
-        Start-Sleep -Seconds 3
-        $end = Get-Date
-        $duration = ($end - $start).TotalSeconds
-        "deployment-url=https://app.${{ inputs.environment }}.example.com" >> $env:GITHUB_OUTPUT
-        "deployment-time=$duration" >> $env:GITHUB_OUTPUT
-        if (${{ inputs.notify-team }} -eq "true") {
-        Write-Host "Team has been notified."
-        }
-      shell: powershell
+        echo Deploying version ${{ inputs.version }} to ${{ inputs.environment }}
+        for /f %%i in ('powershell -Command "Get-Date -UFormat %%s"') do set START=%%i
+        timeout /t 3 /nobreak > nul
+        for /f %%i in ('powershell -Command "Get-Date -UFormat %%s"') do set END=%%i
+        set /a DURATION=%END% - %START%
+        echo deployment-url=https://app.${{ inputs.environment }}.example.com>> %GITHUB_OUTPUT%
+        echo deployment-time=%DURATION%>> %GITHUB_OUTPUT%
+        if "${{ inputs.notify-team }}"=="true" (
+          echo Team has been notified.
+        )
+      shell: cmd
