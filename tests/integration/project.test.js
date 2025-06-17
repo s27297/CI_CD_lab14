@@ -4,7 +4,7 @@ let app;
 beforeAll(() => {
   app = require("express")();
 
-  const [add, razy] = require("../functions");
+  const [add, razy] = require("../../functions");
 
   app.get("/api/status", (req, res) => {
     res.json({

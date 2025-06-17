@@ -1,4 +1,4 @@
-const [add, razy] = require("../functions");
+const [add, razy] = require("../../functions");
 
 describe("Testy funkcji matematycznych", () => {
   test("add(5, 7) powinno zwrócić 12", () => {
