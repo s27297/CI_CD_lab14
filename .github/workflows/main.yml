@@ -58,7 +58,6 @@ jobs:
           name: test-reports
           path: coverage/
 
-
   integration:
     needs: test
     runs-on: ubuntu-latest
