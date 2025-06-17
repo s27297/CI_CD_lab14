@@ -29,4 +29,4 @@ runs:
         if [[ "${{ inputs.notify-team }}" == "true" ]]; then
           echo "Team has been notified."
         fi
-      shell: bash
+      shell: cmd
