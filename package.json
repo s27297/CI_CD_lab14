@@ -4,6 +4,7 @@
   "description": "",
   "main": "project.js",
   "scripts": {
+    "format": "prettier --write .",
     "start": "node project.js",
     "lint": "eslint .",
     "format:check": "prettier --check .",
