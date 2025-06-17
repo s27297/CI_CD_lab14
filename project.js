@@ -1,14 +1,14 @@
-const [add,razy,divide]=require('./functions.js')
-let sonarqube=require('sonarqube-scanner')
-express=require('express')
+const [add,razy]=require('./functions.js')
 
-app = express()
+const express=require('express')
+
+const app = express()
 
 app.get('/api/status', (req, res)=> {
-    let version1=process.version
+    // let version1=process.version
     let status1="health"
-    console.log(version1)
-    res.json({'version': version1,'status':status1})
+    console.log("version1")
+    res.json({'version': "version1",'status':status1})
 })
 //cat
 app.get('/api/data', (req, res)=> {
